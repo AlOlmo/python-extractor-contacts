@@ -5,11 +5,15 @@ import requests
 from bs4 import BeautifulSoup, PageElement
 import pandas as pd
 
+
 def safe_extract_text(element: PageElement):
     if element is not None:
         return element.text
     else:
         return ''
+
+
+category = "jardineros"
 
 if __name__ == '__main__':
 
@@ -17,7 +21,7 @@ if __name__ == '__main__':
         time_1 = time.process_time()
         # Request
         html = requests.get(
-            url=f"https://www.paginasamarillas.es/search/jardineros/all-ma/all-pr/all-is/all-ci/all-ba/all-pu/all-nc/{number}?what=jardineros",
+            url=f"https://www.paginasamarillas.es/search/{category}/all-ma/all-pr/all-is/all-ci/all-ba/all-pu/all-nc/{number}?what={category}",
             headers={'User-agent': 'Mozilla/5.0'}
         ).content
 
@@ -39,6 +43,6 @@ if __name__ == '__main__':
             })
 
         # Write file
-        pd.DataFrame.from_dict(parsed_items).to_csv("jardineros.csv", mode='a', header=False)
+        pd.DataFrame.from_dict(parsed_items).to_csv("jardineros.csv", mode='a', header=False, sep='#')
         time_2 = time.process_time()
         print(f"Page {number} scrapped (time: {time_2 - time_1})")
