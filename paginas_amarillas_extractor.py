@@ -26,12 +26,16 @@ if __name__ == '__main__':
         items = soup.find_all("div", {"class": "listado-item"})
         parsed_items = []
         for item in items:
+            web_element = item.find("a", {"class": "web"})
+            web_link = web_element['href'] if web_element else ''
             parsed_items.append({
                 "name": safe_extract_text(item.find_next("span", {"itemprop": "name"})),
                 "postal_code": safe_extract_text(item.find_next("span", {"itemprop": "postalCode"})),
                 "province": safe_extract_text(item.find_next("span", {"itemprop": "addressRegion"})),
                 "city": safe_extract_text(item.find_next("span", {"itemprop": "addressLocality"})),
-                "phone": safe_extract_text(item.find_next("span", {"itemprop": "telephone"}))
+                "phone": safe_extract_text(item.find_next("span", {"itemprop": "telephone"})),
+                "address": safe_extract_text(item.find_next("span", {"itemprop": "streetAddress"})),
+                "web": web_link
             })
 
         # Write file
