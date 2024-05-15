@@ -13,11 +13,11 @@ def safe_extract_text(element: PageElement):
         return ''
 
 
-category = "jardineros"
+category = "inmobiliarias"
 
 if __name__ == '__main__':
 
-    for number in range(1, 200):
+    for number in range(1495, 2000):
         time_1 = time.process_time()
         # Request
         html = requests.get(
@@ -43,6 +43,6 @@ if __name__ == '__main__':
             })
 
         # Write file
-        pd.DataFrame.from_dict(parsed_items).to_csv("jardineros.csv", mode='a', header=False, sep='#')
+        pd.DataFrame.from_dict(parsed_items).to_csv("inmobiliarias.csv", mode='a', header=False, sep='#')
         time_2 = time.process_time()
         print(f"Page {number} scrapped (time: {time_2 - time_1})")
